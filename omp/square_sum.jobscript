@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --job-name="squaresum"
+#SBATCH --output="squaresum-%j.out"
+#SBATCH --partition=trial
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=6
+#SBATCH --mem=8G
+#SBATCH --account=RFST
+#SBATCH --export=ALL
+#SBATCH -t 00:02:00
+
+for N in 2 4 6 8 10 12 14 16
+do
+	echo "Starting STATS with $N threads" 
+	export OMP_NUM_THREADS=$N
+	./square_sum_omp.exe
+	wait
+	echo ""
+done
